@@ -9,7 +9,7 @@ class Snake {
    int _nr_segments;
 public:
    Snake();
-   Snake(const Point& _position);
+   Snake(const Point& position);
    void Move(Direction direction);
    int GetSize() const;
    Point GetPosition() const;
