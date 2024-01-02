@@ -1,31 +1,56 @@
-all: SnakeGame
+CXX=g++
 
-SnakeGame: apple.o board.o direction.o game_engine.o painter.o point.o snake.o main.o
-	g++ -o Snake.exe apple.o board.o direction.o game_engine.o painter.o point.o snake.o main.o
+BINDIR=bin
+OBJDIR=obj
+SRCDIR=src
 
-apple.o: apple.cpp
-	g++ apple.cpp -o apple.o -c
+OBJECTS=$(OBJDIR)/apple.o \
+	$(OBJDIR)/board.o \
+	$(OBJDIR)/direction.o \
+	$(OBJDIR)/game_engine.o \
+	$(OBJDIR)/painter.o \
+	$(OBJDIR)/point.o \
+	$(OBJDIR)/snake.o \
+	$(OBJDIR)/main.o
 
-board.o: board.cpp
-	g++ board.cpp -o board.o -c
+APP=$(BINDIR)/SnakeGame
 
-direction.o: direction.cpp
-	g++ direction.cpp -o direction.o -c
+all: $(SRCDIR) $(OBJDIR) $(BINDIR) $(APP)
 
-game_engine.o: game_engine.cpp
-	g++ game_engine.cpp -o game_engine.o -c
+$(SRCDIR):
 
-painter.o: painter.cpp
-	g++ painter.cpp -o painter.o -c
+$(OBJDIR):
+	mkdir $(OBJDIR)
 
-point.o: point.cpp
-	g++ point.cpp -o point.o -c
+$(BINDIR):
+	mkdir $(BINDIR)
 
-snake.o: snake.cpp
-	g++ snake.cpp -o snake.o -c
+$(APP): $(OBJECTS)
+	$(CXX) -o $(APP) $(OBJECTS)
 
-main.o: main.cpp
-	g++ main.cpp -o main.o -c
+$(OBJDIR)/apple.o: $(SRCDIR)/apple.cpp
+	$(CXX) $(SRCDIR)/apple.cpp -o $(OBJDIR)/apple.o -c
+
+$(OBJDIR)/board.o: $(SRCDIR)/board.cpp
+	$(CXX) $(SRCDIR)/board.cpp -o $(OBJDIR)/board.o -c
+
+$(OBJDIR)/direction.o: $(SRCDIR)/direction.cpp
+	$(CXX) $(SRCDIR)/direction.cpp -o $(OBJDIR)/direction.o -c
+
+$(OBJDIR)/game_engine.o: $(SRCDIR)/game_engine.cpp
+	$(CXX) $(SRCDIR)/game_engine.cpp -o $(OBJDIR)/game_engine.o -c
+
+$(OBJDIR)/painter.o: $(SRCDIR)/painter.cpp
+	$(CXX) $(SRCDIR)/painter.cpp -o $(OBJDIR)/painter.o -c
+
+$(OBJDIR)/point.o: $(SRCDIR)/point.cpp
+	$(CXX) $(SRCDIR)/point.cpp -o $(OBJDIR)/point.o -c
+
+$(OBJDIR)/snake.o: $(SRCDIR)/snake.cpp
+	$(CXX) $(SRCDIR)/snake.cpp -o $(OBJDIR)/snake.o -c
+
+$(OBJDIR)/main.o: $(SRCDIR)/main.cpp
+	$(CXX) $(SRCDIR)/main.cpp -o $(OBJDIR)/main.o -c
 
 clean:
-	rm -f *.o *.exe
+	rm -f $(OBJDIR)/*.o $(BINDIR)/*.exe
