@@ -33,3 +33,5 @@
 
 # project files
 .vscode/
+bin
+obj
