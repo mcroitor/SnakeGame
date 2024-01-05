@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 
 class Board {
    int _width;
@@ -13,6 +14,8 @@ public:
 
    Board operator = (const Board& other);
    bool operator == (const Board& other) const;
+
+   std::string Info() const;
 };
 
 std::istream& operator >> (std::istream& in, Board& board);

@@ -26,6 +26,10 @@ bool Board::operator==(const Board &other) const
     return GetWidth() == other.GetWidth() && GetHeight() == other.GetHeight();
 }
 
+std::string Board::Info() const {
+    return std::string("[") + std::to_string(_width) + ", " + std::to_string(_height) + std::string("]");
+}
+
 std::istream &operator>>(std::istream &in, Board &board)
 {
     int width, height;
@@ -36,6 +40,6 @@ std::istream &operator>>(std::istream &in, Board &board)
 
 std::ostream &operator<<(std::ostream &out, const Board &board)
 {
-    out << board.GetWidth() << " " << board.GetHeight();
+    out << board.Info();
     return out;
 }
