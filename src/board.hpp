@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+#include "point.hpp"
+
 class Board {
    int _width;
    int _height;
@@ -11,6 +13,7 @@ public:
    Board(const Board& other);
    int GetWidth() const;
    int GetHeight() const;
+   Point GetRandomPosition() const;
 
    Board operator = (const Board& other);
    bool operator == (const Board& other) const;

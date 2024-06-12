@@ -1,7 +1,7 @@
 CXX=g++
 
-INCOPTS=-O2 -std=c++20
-LINKOPTS=-pthread
+INCOPTS=-O2 -std=c++20 -Ituia/include
+LINKOPTS=-pthread -Ltuia/lib -ltuia -static
 
 BINDIR=bin
 OBJDIR=obj
@@ -11,7 +11,6 @@ OBJECTS=$(OBJDIR)/apple.o \
 	$(OBJDIR)/board.o \
 	$(OBJDIR)/direction.o \
 	$(OBJDIR)/game_engine.o \
-	$(OBJDIR)/painter.o \
 	$(OBJDIR)/point.o \
 	$(OBJDIR)/snake.o \
 	$(OBJDIR)/main.o
@@ -42,9 +41,6 @@ $(OBJDIR)/direction.o: $(SRCDIR)/direction.cpp
 
 $(OBJDIR)/game_engine.o: $(SRCDIR)/game_engine.cpp
 	$(CXX) $(SRCDIR)/game_engine.cpp -o $(OBJDIR)/game_engine.o -c $(INCOPTS)
-
-$(OBJDIR)/painter.o: $(SRCDIR)/painter.cpp
-	$(CXX) $(SRCDIR)/painter.cpp -o $(OBJDIR)/painter.o -c $(INCOPTS)
 
 $(OBJDIR)/point.o: $(SRCDIR)/point.cpp
 	$(CXX) $(SRCDIR)/point.cpp -o $(OBJDIR)/point.o -c $(INCOPTS)
