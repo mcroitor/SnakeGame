@@ -7,21 +7,14 @@ BINDIR=bin
 APPNAME=Snake
 
 RM=rm -f
-ifeq ($(OS),Windows_NT)
-	RM=del /Q
-endif
-
 MD=mkdir -p
-ifeq ($(OS),Windows_NT)
-	MD=mkdir
-endif
 
-all: init SnakeGame
+all: init $(APPNAME)
 
 init:
 	$(MD) $(OBJDIR) $(BINDIR)
 
-SnakeGame: apple.o board.o direction.o game_engine.o painter.o point.o snake.o main.o
+$(APPNAME): apple.o board.o direction.o game_engine.o painter.o point.o snake.o main.o
 	$(CC) -o $(BINDIR)/$(APPNAME) \
 		$(OBJDIR)/apple.o $(OBJDIR)/board.o $(OBJDIR)/direction.o \
 		$(OBJDIR)/game_engine.o $(OBJDIR)/painter.o $(OBJDIR)/point.o \
