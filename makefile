@@ -5,6 +5,7 @@ SRCDIR=src
 OBJDIR=obj
 BINDIR=bin
 APPNAME=Snake
+DLLS=apple.dll board.dll direction.dll point.dll snake.dll
 
 RM=rm -f
 MD=mkdir -p
@@ -14,11 +15,10 @@ all: init $(APPNAME)
 init:
 	$(MD) $(OBJDIR) $(BINDIR)
 
-$(APPNAME): apple.o board.o direction.o game_engine.o painter.o point.o snake.o main.o
+$(APPNAME): game_engine.o painter.o main.o $(DLLS)
 	$(CC) -o $(BINDIR)/$(APPNAME) \
-		$(OBJDIR)/apple.o $(OBJDIR)/board.o $(OBJDIR)/direction.o \
-		$(OBJDIR)/game_engine.o $(OBJDIR)/painter.o $(OBJDIR)/point.o \
-		$(OBJDIR)/snake.o $(OBJDIR)/main.o
+		$(OBJDIR)/game_engine.o $(OBJDIR)/painter.o $(OBJDIR)/main.o \
+		-L$(BINDIR) -lapple -lboard -ldirection -lpoint -lsnake
 
 apple.o:
 	$(CC) $(SRCDIR)/apple.cpp -o $(OBJDIR)/apple.o -c
@@ -43,6 +43,21 @@ snake.o:
 
 main.o:
 	$(CC) $(SRCDIR)/main.cpp -o $(OBJDIR)/main.o -c
+
+apple.dll: point.dll
+	$(CC) $(OBJDIR)/apple.o -shared -o $(BINDIR)/apple.dll -L$(BINDIR) -lpoint
+
+board.dll: point.dll
+	$(CC) $(OBJDIR)/board.o -shared -o $(BINDIR)/board.dll -L$(BINDIR) -lpoint
+
+direction.dll:
+	$(CC) $(OBJDIR)/direction.o -shared -o $(BINDIR)/direction.dll
+
+point.dll:
+	$(CC) $(OBJDIR)/point.o -shared -o $(BINDIR)/point.dll
+
+snake.dll: point.dll apple.dll
+	$(CC) $(OBJDIR)/snake.o -shared -o $(BINDIR)/snake.dll -L$(BINDIR) -lpoint -lapple
 
 clean:
 	$(RM) $(OBJDIR)/*.o $(BINDIR)/$(APPNAME)
