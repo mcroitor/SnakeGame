@@ -1,5 +1,7 @@
 #include "snake.hpp"
 
+#include <algorithm>
+
 Snake::Snake(): _nr_segments{1}, _segments{1, {1, 1}}  {}
 
 Snake::Snake(const Point &_position): _nr_segments{1}, _segments{1, _position} {}
@@ -37,8 +39,12 @@ Point Snake::GetPosition() const {
     return _segments.front();
 }
 void Snake::Eat(const Apple &apple) {
+    if(!(_segments.front() == apple.GetPosition()))
+    {
+        return;
+    }
     _nr_segments++;
-    _segments.push_front(apple.GetPosition());
+    _segments.push_back(_segments.back());
 }
 
 Point Snake::GetHead() const {
@@ -54,14 +60,6 @@ const std::deque<Point>& Snake::GetSegments() const {
 }
 
 bool Snake::IsEatingItself() const {
-    /*
-    for (int i = 1; i < _segments.size(); i++)
-    {
-        if (_segments[i] == _segments[0])
-        {
-            return true;
-        }
-    }
-    */
-    return false;
+    auto head = GetHead();
+    return std::find(_segments.begin() + 1, _segments.end(), head) != _segments.end();
 }
