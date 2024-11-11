@@ -12,7 +12,7 @@ GameEngine::GameEngine()
 
 void GameEngine::Init()
 {
-    _board = Board(40, 20);
+    _board = Board(60, 24);
     _apple = Apple(_board.GetRandomPosition());
     _snake = Snake(_board.GetRandomPosition());
 }
