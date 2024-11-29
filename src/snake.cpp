@@ -2,9 +2,9 @@
 
 #include <algorithm>
 
-Snake::Snake(): _nr_segments{1}, _segments{1, {1, 1}}  {}
+Snake::Snake(): _nr_segments{1}, _segments(1, Point(1, 1))  {}
 
-Snake::Snake(const Point &_position): _nr_segments{1}, _segments{1, _position} {}
+Snake::Snake(const Point &_position): _nr_segments{1}, _segments(1, _position) {}
 
 void Snake::Move(Direction direction) {
     
