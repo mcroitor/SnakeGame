@@ -4,7 +4,16 @@ Point::Point(int _x, int _y) : x(_x), y(_y) {}
 
 Point::Point(const Point &other) : x(other.x), y(other.y) {}
 
+Point::Point(Point &&other) noexcept : x(other.x), y(other.y) {}
+
 Point Point::operator=(const Point &other)
+{
+    x = other.x;
+    y = other.y;
+    return *this;
+}
+
+Point Point::operator=(Point &&other) noexcept
 {
     x = other.x;
     y = other.y;

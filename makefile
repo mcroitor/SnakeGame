@@ -4,9 +4,12 @@ CXXFLAGS=-std=c++17 -Wall -Wextra -pedantic -g
 SRCDIR=src
 OBJDIR=obj
 BINDIR=bin
+TESTSDIR=tests
+
 APPNAME=Snake
 DLLS=apple.dll board.dll direction.dll point.dll snake.dll
 LDFLAGS=-L$(BINDIR) -lapple -lboard -ldirection -lpoint -lsnake
+TESTS=$(wildcard $(TESTSDIR)/*.cpp)
 
 RM=rm -f
 MD=mkdir -p
@@ -61,4 +64,10 @@ snake.dll: snake.o point.dll apple.dll
 	$(CC) $(OBJDIR)/snake.o -shared -o $(BINDIR)/snake.dll -L$(BINDIR) -lpoint -lapple
 
 clean:
-	$(RM) $(OBJDIR)/*.o $(BINDIR)/$(APPNAME)
+	$(RM) $(OBJDIR)/*.o  $(BINDIR)/*.dll $(BINDIR)/$(APPNAME) $(BINDIR)/tests
+
+tests: apple.dll board.dll direction.dll point.dll snake.dll
+	$(CC) $(TESTSDIR)/catch2/catch_amalgamated.cpp $(TESTS) \
+		-o $(BINDIR)/tests -I$(TESTSDIR) -I$(TESTSDIR)/catch2 -I$(SRCDIR) \
+		$(CXXFLAGS) $(LDFLAGS) -L$(BINDIR) -lapple -lboard -ldirection -lpoint -lsnake
+	$(BINDIR)/tests --verbosity=high

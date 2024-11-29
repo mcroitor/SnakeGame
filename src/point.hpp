@@ -8,8 +8,10 @@ struct Point{
 
    Point(int _x = 0, int _y = 0);
    Point(const Point& other);
+   Point(Point&& other) noexcept;
 
    Point operator = (const Point& other);
+   Point operator = (Point&& other) noexcept;
    bool operator == (const Point& other) const;
 };
 
