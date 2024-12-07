@@ -25,3 +25,20 @@ TEST_CASE("Snake can move", "[snake]") {
     snake.Move(Direction::Top);
     REQUIRE(snake.GetPosition() == position);
 }
+
+TEST_CASE("Snake eats an apple", "[snake]") {
+    Point position{5, 5};
+    Point apple_position{position.x + 1, position.y};
+    Snake snake(position);
+    Apple apple{apple_position};
+    REQUIRE(snake.GetSize() == 1);
+    snake.Eat(apple);
+    REQUIRE(snake.GetSize() == 1);
+    snake.Move(Direction::Right);
+    snake.Eat(apple);
+    REQUIRE(snake.GetSize() == 2);
+    REQUIRE(snake.GetHead() == apple_position);
+    REQUIRE(snake.IsEatingItself() == false);
+    snake.Move(Direction::Right);
+    REQUIRE(snake.IsEatingItself() == false);
+}
